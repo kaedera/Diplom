@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../css_styles/regstyle.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="icon" type="image/png" href="../images/logo.png">
+        <title>Регистрация</title>
+    </head>
+    <body>
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-name">
+                    <img src="../images/logo.png" alt="Логотип" class="logo-img">
+                    <div class="logo-name-text">
+                        <span>Добрые</span>
+                        <span>лапки</span>
+                    </div>
+                    <a href="index.html" class="back-button">←</a>
+                </div>
+            </div>
+        </header>
+    
+        <div class="wrapper">
+            <div class="avatar-section">
+                <div class="avatar-preview" id="avatarPreview">
+                    <img id="avatarImage" src="../images/avatar_default.png" alt="Аватар">
+                </div>
+                <label for="avatarInput" class="avatar-label">Добавить аватар</label>
+                <input type="file" name="avatar" accept="image/*" id="avatarInput">
+            </div>
+    
+            <form action="#" method="post" enctype="multipart/form-data">
+                <div class="name-fields">
+                    <div class="input-box">
+                        <label>Фамилия:</label>
+                        <input type="text" name="surname" placeholder="Введите фамилию" required>
+                    </div>
+    
+                    <div class="input-box">
+                        <label>Имя:</label>
+                        <input type="text" name="name" placeholder="Введите имя" required>
+                    </div>
+    
+                    <div class="input-box">
+                        <label>Отчество*:</label>
+                        <input type="text" name="patronymic" placeholder="Введите отчество">
+                    </div>
+                </div>
+    
+                <div class="input-box">
+                    <label>Дата рождения:</label>
+                    <input type="date" name="date_birth" required>
+                </div>
+    
+                <div class="input-box">
+                    <label>Почта:</label>
+                    <input type="email" name="mail" placeholder="Введите почту" required>
+                </div>
+    
+                <div class="input-box gender-box">
+                    <label>Пол</label>
+                    <select name="gender" required>
+                        <option value="" disabled selected>Выберите пол</option>
+                        <option value="female">Женский</option>
+                        <option value="male">Мужской</option>
+                    </select>
+                </div>
+    
+                <div class="input-box">
+                    <label>Телефон:</label>
+                    <input type="tel" name="telephone" placeholder="Введите телефон" required>
+                </div>
+    
+                <button type="submit" class="register-btn">Зарегистрироваться</button>
+            </form>
+        </div>
+    
+        <script>
+            const input = document.getElementById('avatarInput');
+            const image = document.getElementById('avatarImage');
+            const preview = document.getElementById('avatarPreview');
+    
+            input.addEventListener('change', () => {
+                const file = input.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        image.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        </script>
+    </body>
+    

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+    <link rel="stylesheet" href="../css_styles/mainstr.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="../images/logo.png">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-name">
+                <img src="../images/logo.png" alt="Логотип" class="logo-img">
+                <div class="logo-name-text">
+                    <span>Добрые</span>
+                    <span>лапки</span>
+                </div>
+            </div>
+            <div class="user-controls">
+                <i class='bx bx-cog'></i>
+                <i class='bx bx-exit'></i>
+                <div class="avatar-preview">
+                    <img src="../images/avatar_default.png" alt="Аватар">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        <aside class="filters-sidebar">
+            <div class="filters-section">
+                <h3>Фильтры</h3>
+                <div class="filter-dropdown">
+                    <label for="animalType">Вид животного</label>
+                    <select id="animalType"><option value="">Выберите вид</option></select>
+                </div>
+                <div class="filter-dropdown">
+                    <label for="age">Возраст</label>
+                    <select id="age"><option value="">Выберите возраст</option></select>
+                </div>
+                <div class="filter-dropdown">
+                    <label for="breed">Порода</label>
+                    <select id="breed"><option value="">Выберите породу</option></select>
+                </div>
+                <div class="filter-dropdown">
+                    <label for="city">Город</label>
+                    <select id="city"><option value="">Выберите город</option></select>
+                </div>
+                <div class="filter-dropdown">
+                    <label for="status">Статус приручения</label>
+                    <select id="status"><option value="">Выберите статус</option></select>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="sort-section">
+                <button class="sort-btn"><i class='bx bx-sort-up'></i> По возрастанию</button>
+                <button class="sort-btn"><i class='bx bx-sort-down'></i> По убыванию</button>
+            </div>
+
+            <div class="animals-grid" id="animalsGrid"></div>
+
+            <div class="pagination">
+                <button id="prevPage">&larr; Назад</button>
+                <span id="pageIndicator">Стр. 1</span>
+                <button id="nextPage">Вперёд &rarr;</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const animalsData = Array.from({length: 30}, (_, i) => ({
+            name: `Эмиль ${i + 1}`,
+            description: 'Очень милый и дружелюбный. Ищет добрые руки.',
+            image: '../images/dog.png'
+        }));
+
+        const animalsPerPage = 8;
+        let currentPage = 1;
+
+        function renderAnimals() {
+            const grid = document.getElementById('animalsGrid');
+            grid.innerHTML = '';
+
+            const start = (currentPage - 1) * animalsPerPage;
+            const currentAnimals = animalsData.slice(start, start + animalsPerPage);
+
+            currentAnimals.forEach(animal => {
+                const card = document.createElement('div');
+                card.className = 'card-container';
+                card.innerHTML = `
+                    <div class="product-card">
+                        <div class="image-block">
+                            <img src="${animal.image}" alt="${animal.name}">
+                        </div>
+                        <div class="product-info">
+                            <h2>${animal.name}</h2>
+                            <p>${animal.description}</p>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            document.getElementById('pageIndicator').textContent = `Стр. ${currentPage}`;
+        }
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderAnimals();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            if (currentPage * animalsPerPage < animalsData.length) {
+                currentPage++;
+                renderAnimals();
+            }
+        });
+
+        renderAnimals();
+    </script>
+</body>
+</html>
