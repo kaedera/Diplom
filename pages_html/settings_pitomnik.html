@@ -2,72 +2,64 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Главная страница</title>
-    <link rel="stylesheet" href="../css_styles/mainstr.css">
+    <title>Животные в приюте</title>
+    <link rel="stylesheet" href="../css_styles/settings_pitomnik.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="icon" type="image/png" href="../images/logo.png">
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <div class="logo-name">
+    <div class="dashboard-wrapper">
+        <aside class="left-sidebar">
+            <div class="logo-block">
                 <img src="../images/logo.png" alt="Логотип" class="logo-img">
-                <div class="logo-name-text">
-                    <span>Добрые</span>
-                    <span>лапки</span>
+                <div class="logo-text">
+                    <span class="logo-highlight">Добрые</span>
+                    <span class="logo-highlight">лапки</span>
                 </div>
             </div>
-            <div class="user-controls">
-                <a href="settings_pitomnik.html" title="Настройки"><i class='bx bx-cog'></i></a>
-                <i class='bx bx-exit'></i>
-                <div class="avatar-preview">
-                    <img src="../images/avatar_default.png" alt="Аватар">
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="content-wrapper">
-        <aside class="filters-sidebar">
-            <div class="filters-section">
-                <h3>Фильтры</h3>
-                <div class="filter-dropdown">
-                    <label for="animalType">Вид животного</label>
-                    <select id="animalType"><option value="">Выберите вид</option></select>
-                </div>
-                <div class="filter-dropdown">
-                    <label for="age">Возраст</label>
-                    <select id="age"><option value="">Выберите возраст</option></select>
-                </div>
-                <div class="filter-dropdown">
-                    <label for="breed">Порода</label>
-                    <select id="breed"><option value="">Выберите породу</option></select>
-                </div>
-                <div class="filter-dropdown">
-                    <label for="city">Город</label>
-                    <select id="city"><option value="">Выберите город</option></select>
-                </div>
-                <div class="filter-dropdown">
-                    <label for="status">Статус приручения</label>
-                    <select id="status"><option value="">Выберите статус</option></select>
-                </div>
-            </div>
+            <nav class="sidebar-nav">
+                <a href="settings_pitomnik.html" class="nav-btn black-btn active"><i class='bx bx-home-heart'></i> Животные в приюте</a>
+                <a href="settings_account.html" class="nav-btn black-btn"><i class='bx bx-user-circle'></i> Управление аккаунтом</a>
+                <button class="nav-btn black-btn"><i class='bx bx-task'></i> Заявки на усыновление</button>
+            </nav>
         </aside>
 
-        <main class="main-content">
-            <div class="sort-section">
-                <button class="sort-btn"><i class='bx bx-sort-up'></i> По возрастанию</button>
-                <button class="sort-btn"><i class='bx bx-sort-down'></i> По убыванию</button>
+        <div class="main-area">
+            <header class="top-header">
+                <div class="page-title-wrapper">
+                    <h1 class="page-title">Животные в приюте</h1>
+                </div>
+                <div class="top-buttons">
+                    <button class="blue-btn" onclick="location.href='mainstr.html'"><i class='bx bx-arrow-back'></i> Назад</button>
+                    <button class="blue-btn"><i class='bx bx-log-out'></i> Выход</button>
+                    <div class="avatar-wrapper">
+                        <img src="../images/avatar_default.png" alt="Аватар" class="avatar-img">
+                    </div>
+                </div>
+            </header>
+
+            <div class="controls-bar">
+                <div class="filters">
+                    <button class="sort-btn"><i class='bx bx-sort-up'></i></button>
+                    <button class="sort-btn"><i class='bx bx-sort-down'></i></button>
+
+                    <select class="filter-select">
+                        <option value="">Вид животного</option>
+                    </select>
+                    <select class="filter-select">
+                        <option value="">Порода</option>
+                    </select>
+                </div>
+                <button class="add-btn">Добавить животное</button>
             </div>
 
             <div class="animals-grid" id="animalsGrid"></div>
-
             <div class="pagination">
                 <button id="prevPage">&larr; Назад</button>
                 <span id="pageIndicator">Стр. 1</span>
                 <button id="nextPage">Вперёд &rarr;</button>
             </div>
-        </main>
+        </div>
     </div>
 
     <script>
@@ -104,7 +96,7 @@
                 grid.appendChild(card);
             });
 
-            document.getElementById('pageIndicator').textContent = `Стр. ${currentPage}`;
+            document.getElementById('pageIndicator').textContent = `Стр. ${currentPage}`
         }
 
         document.getElementById('prevPage').addEventListener('click', () => {
