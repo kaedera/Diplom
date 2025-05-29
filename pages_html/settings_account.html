@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Управление аккаунтом</title>
+    <link rel="stylesheet" href="../css_styles/setting_account.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="../images/logo.png">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <aside class="left-sidebar">
+            <div class="logo-block">
+                <img src="../images/logo.png" alt="Логотип" class="logo-img">
+                <div class="logo-text">
+                    <span class="logo-highlight">Добрые</span>
+                    <span class="logo-highlight">лапки</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn left-sidebar-btn"onclick="location.href='settings_pitomnik.html'"><i class='bx bx-home-heart'></i> Животные в приюте</button>
+                <button class="nav-btn left-sidebar-btn active"onclick="location.href='setting_account.html'"><i class='bx bx-user-circle'></i> Управление аккаунтом</a>
+                <button class="nav-btn left-sidebar-btn"><i class='bx bx-task'></i> Заявки на усыновление</button>
+            </nav>
+        </aside>
+
+        <div class="main-area">
+            <header class="top-header">
+                <div class="page-title-wrapper">
+                    <h1 class="page-title">Управление аккаунтом</h1>
+                </div>
+                <div class="top-buttons">
+                    <button class="blue-btn" onclick="location.href='settings_pitomnik.html'"><i class='bx bx-arrow-back'></i> Назад</button>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+
+                <div class="top-content-row">
+                    <div class="avatar-section">
+                        <div class="avatar-preview" id="avatarPreview">
+                            <img id="avatarImage" src="../images/avatar_default.png" alt="Аватар">
+                        </div>
+                        <button class="avatar-btn blue-btn" onclick="document.getElementById('avatarInput').click();">
+                            Изменить аватар
+                        </button>
+                        <input type="file" name="avatar" accept="image/*" id="avatarInput" style="display: none;">
+                    </div>
+
+                    <div class="info-section">
+                        <label>Название приюта:</label>
+                        <input type="text" class="info-field" value="Название приюта">
+
+                        <label>Адрес:</label>
+                        <input type="text" class="info-field" value="Адрес">
+
+                        <label>Дата создания:</label>
+                        <input type="date" class="info-field" value="">
+
+                        <button class="blue-btn" onclick="showConfirmModal()">Сохранить изменения</button>
+                    </div>
+                </div>
+
+                <div class="middle-content-row">
+                    <div class="contacts-section">
+                        <label>Контакты:</label>
+                        <input type="text" placeholder="Контактный номер 1">
+                        <input type="text" placeholder="Контактный номер 2">
+                        <div class="socials">
+                            <img src="../images/tg.png" class="social-icon" alt="Telegram" onclick="openPopup('telegram')">
+                            <img src="../images/vk.png" class="social-icon" alt="VK" onclick="openPopup('vk')">
+                        </div>
+                        <button class="blue-btn" onclick="showConfirmModal()">Сохранить изменения</button>
+                    </div>
+
+                    <div class="about-section">
+                        <h2>Информация о приюте:</h2>
+                        <textarea rows="6" placeholder="Описание...">Описание приюта здесь...</textarea>
+                        <button class="blue-btn" onclick="showConfirmModal()">Сохранить изменения</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Всплывающее окно для соцсетей -->
+    <div class="popup" id="popup" style="display: none;">
+        <div class="popup-content">
+            <h3 id="popup-title"></h3>
+            <input type="text" id="socialInput" placeholder="Введите ссылку...">
+            <div class="popup-buttons">
+                <button onclick="saveSocialLink()">Окей</button>
+                <button onclick="closePopup()">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно подтверждения -->
+    <div class="modal-overlay" id="confirmModal" style="display: none;">
+        <div class="modal">
+            <p>Вы уверены, что хотите сохранить изменения?</p>
+            <div class="modal-buttons">
+                <button class="btn-confirm" onclick="confirmSave()">Да</button>
+                <button class="btn-cancel" onclick="closeConfirmModal()">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Аватарка
+        const input = document.getElementById('avatarInput');
+        const image = document.getElementById('avatarImage');
+
+        input.addEventListener('change', () => {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    image.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Popup для соцсетей - контролируем, чтобы не дублировалось
+        let currentPlatform = '';
+        let isPopupOpen = false;
+
+        function openPopup(platform) {
+            if (isPopupOpen) return; // Если уже открыт, не открывать заново
+            isPopupOpen = true;
+            currentPlatform = platform;
+            document.getElementById('popup-title').innerText = `Введите ссылку на ${platform === 'telegram' ? 'Telegram' : 'VK'}`;
+            document.getElementById('socialInput').value = '';
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            isPopupOpen = false;
+        }
+
+        function saveSocialLink() {
+            const link = document.getElementById('socialInput').value.trim();
+            if (!link) {
+                alert('Пожалуйста, введите ссылку.');
+                return;
+            }
+            console.log(`Сохранена ссылка на ${currentPlatform}: ${link}`);
+            closePopup();
+            // Здесь можно добавить сохранение ссылки, например, отправить на сервер
+        }
+
+        // Модальное окно подтверждения
+        function showConfirmModal() {
+            document.getElementById('confirmModal').style.display = 'flex';
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        function confirmSave() {
+            closeConfirmModal();
+            alert("Изменения сохранены!");
+            // Здесь можешь добавить отправку данных на сервер
+        }
+    </script>
+</body>
+</html>

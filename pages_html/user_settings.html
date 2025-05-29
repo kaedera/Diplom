@@ -1,0 +1,108 @@
+<!--ЭТОТ КОД НЕ ДЕЙСТВИТЕЛЬНЫЙ И ЯВЛЯЕТСЯ КОПИЕЙ ДРУГОГО ПРОФИЛЯ ДЛЯ ИЗМЕНЕНИЯ -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Управление аккаунтом</title>
+    <link rel="stylesheet" href="../css_styles/user_settings.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="../images/logo.png">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <aside class="left-sidebar">
+            <div class="logo-block">
+                <img src="../images/logo.png" alt="Логотип" class="logo-img">
+                <div class="logo-text">
+                    <span class="logo-highlight">Добрые</span>
+                    <span class="logo-highlight">лапки</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn left-sidebar-btn active"onclick="location.href='setting_account.html'"><i class='bx bx-user-circle'></i> Управление аккаунтом</a>
+                <button class="nav-btn left-sidebar-btn"><i class='bx bx-task'></i> Ваши заявки на усыновления</button>
+            </nav>
+        </aside>
+
+        <div class="main-area">
+            <header class="top-header">
+                <div class="page-title-wrapper">
+                    <h1 class="page-title">Управление аккаунтом</h1>
+                </div>
+                <div class="top-buttons">
+                    <button class="blue-btn" onclick="location.href='mainstr.html'"><i class='bx bx-arrow-back'></i> Назад</button>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+
+                <div class="avatar-section">
+                    <div class="avatar-preview" id="avatarPreview">
+                        <img id="avatarImage" src="../images/avatar_default.png" alt="Аватар">
+                    </div>
+                    <button class="avatar-btn blue-btn" onclick="document.getElementById('avatarInput').click();">
+                        Изменить аватар
+                    </button>
+                     <input type="file" name="avatar" accept="image/*" id="avatarInput" style="display: none;">
+                </div>
+
+                <div class="info-section">
+                    <label>Название приюта:</label>
+                    <input type="text" class="info-field" value="Название приюта">
+
+                    <label>Адрес:</label>
+                    <input type="text" class="info-field" value="Адрес">
+
+                    <label>Дата создания:</label>
+                    <input type="date" class="info-field" value="">
+
+                    <button class="blue-btn" onclick="showConfirmModal()">Сохранить изменения</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно подтверждения -->
+    <div class="modal-overlay" id="confirmModal" style="display: none;">
+        <div class="modal">
+            <p>Вы уверены, что хотите сохранить изменения?</p>
+            <div class="modal-buttons">
+                <button class="btn-confirm" onclick="confirmSave()">Да</button>
+                <button class="btn-cancel" onclick="closeConfirmModal()">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Аватарка
+        const input = document.getElementById('avatarInput');
+        const image = document.getElementById('avatarImage');
+
+        input.addEventListener('change', () => {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    image.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Модальное окно подтверждения
+        function showConfirmModal() {
+            document.getElementById('confirmModal').style.display = 'flex';
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        function confirmSave() {
+            closeConfirmModal();
+            alert("Изменения сохранены!");
+            // Здесь можешь добавить отправку данных на сервер
+        }
+    </script>
+</body>
+</html> 
